@@ -27,8 +27,8 @@ public class BaseballAnalytics {
 			String teamID = fields[3];
 			int gamesCount = Integer.parseInt(fields[6]);
 
-			team.set("teamID");
-			games.set(123);
+			team.set(teamID);
+			games.set(gamesCount);
 
 			context.write(team, games);
 		}
@@ -44,8 +44,8 @@ public class BaseballAnalytics {
 			
 			for (LongWritable val : games) {
 
-				sum += 1;
-				
+				sum += val.get();
+;	
 			}
 
 			result.set(sum);
@@ -65,6 +65,8 @@ public class BaseballAnalytics {
 		job.setReducerClass(TeamsReducer.class);
 		job.setOutputValueClass(Text.class);
 		job.setOutputValueClass(LongWritable.class);
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(LongWritable.class);
 		System.out.println("Input format class: " + job.getInputFormatClass());
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
