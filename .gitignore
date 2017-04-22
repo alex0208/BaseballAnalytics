@@ -53,3 +53,7 @@ output
 
 #Idea
 .idea
+
+# Java build 
+*.jar
+*.class
